@@ -130,7 +130,7 @@ STATICFILES_DIRS = [
 ] 
 
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/davidomizz/Portfolio/myportfolio/static'
+STATIC_ROOT = '/home/davidomizz/myportfolio/myportfolio/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>Blog</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/lg.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  
+    <!-- =======================================================
+    * Template Name: DevFolio - v4.8.1
+    * Template URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+  </head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="{%url 'home'  %}">DavidOmizz</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="{%url 'home'  %}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{%url 'home'  %}#about">About</a></li>
+          <li><a class="nav-link scrollto " href="#blog">Blog</a></li>
+          <li><a class="nav-link scrollto" href="{%url 'home'  %}#contact">Contact</a></li>
+          <!-- <li><a class="nav-link scrollto" href="{% url 'register' %}">Register</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'logout' %}">Logout</a></li> -->
+          {% if user.is_authenticated %}
+              <li><a class="nav-link scrollto" href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+              <li><a class="nav-link scrollto" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <div class="hero hero-single route bg-image" style="background-image: url(../../static/assets/img/bg.jpg)">
+    <!-- <div class="overlay-mf"></div> -->
+    <div class="hero-content display-table">
+      <div class="table-cell">
+        <div class="container">
+          <h2 class="hero-title mb-2">Home Of Technology</h2>
+          <p class="hero-subtitle fs-5 fw-normal">We serve you content on Technology</p>
+          <!-- <ol class="breadcrumb d-flex justify-content-center">
+            <li class="breadcrumb-item">
+              <a href="#">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a href="#">Library</a>
+            </li>
+            <li class="breadcrumb-item active">Data</li>
+          </ol> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ======= Blog Single Section ======= -->
+    <section class="blog-wrapper sect-pt4" id="blog">
+      <div class="container-fluid"> 
+        <div class="row">
+          <div class="col-md-9 box-shadow-full p-5">
+          {% if bloglist %}
+          {% for bl in bloglist %}
+              <div class="row">
+                <div class="col-3 col-md-6">
+                  <div><img src="{{bl.image.url}}"  height="350em" alt="" class="img-fluid"></div><br>
+                </div>
+                <div class="mt-4 col-3 col-md-6">
+                  <h3><a href="{% url 'blog-single' bl.slug  %}">{{bl.title}}</a></h3>
+                  <p>{{bl.body|truncatewords:30|safe}} <a href="{% url 'blog-single' bl.slug  %}">Readmore</a></p>
+                </div>
+              </div>
+            <hr>
+            <!-- <div class="">
+                <div class="card card-blog">
+                  <div class="card-img">
+                    <a href="{% url 'blog-single' bl.slug  %}"><img src="{{ bl.image.url }}" alt="" class="img-fluid"></a>
+                  </div>
+                  <div class="card-body">
+                    <div class="card-category-box">
+                      <div class="card-category">
+                        <h6 class="category">{{ bl.tag_name}}</h6>
+                      </div>
+                    </div>
+                    <h3 class="card-title"><a href="{% url 'blog-single' bl.slug  %}">{{ bl.title}}</a></h3>
+                    <p class="card-description">
+                      {{ bl.body|truncatewords:30|safe }}
+                    </p>
+                  </div>
+                  <div class="card-footer">
+                    {% if about %}
+                    {% for a in about %}
+                    <div class="post-author">
+                      <a href="#about">
+                        <img src="" alt="" class="avatar rounded-circle">
+                        <span class="author">{{ bl.author }}</span>
+                      </a>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="post-date">
+                      <span class="bi bi-clock"></span> {{ bl.minutes }}
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          {% endfor %}
+          {% endif %}
+          </div>
+          
+          <div class="col-md-3">
+            <div class="widget-sidebar sidebar-search">
+              <h5 class="sidebar-title">Search</h5>
+              <div class="sidebar-content">
+                <form action="{% url 'search_blogs' %}" method="get">
+                  {% csrf_token %}
+                  <div class="input-group">
+                    <input type="search" class="form-control" name="q" placeholder="Search for..." aria-label="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-secondary btn-search" type="submit">
+                        <span class="bi bi-search"></span>
+                      </button>
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="widget-sidebar">
+              <h5 class="sidebar-title">Recent Post</h5>
+              {% if blogsides %}
+              {% for b in blogsides %}
+              <div class="sidebar-content">
+                <ul class="list-sidebar">
+                  <li>
+                    <a href="{% url 'blog-single' b.slug  %}">{{ b.title }}</a>
+                  </li>
+              </div>
+              {% endfor %}
+              {% endif %}
+            </div>
+            <!-- <div class="widget-sidebar">
+              <h5 class="sidebar-title">Archives</h5>
+              <div class="sidebar-content">
+                <ul class="list-sidebar">
+                  <li>
+                    <a href="#">September, 2017.</a>
+                  </li>
+                  <li>
+                    <a href="#">April, 2017.</a>
+                  </li>
+                  <li>
+                    <a href="#">Nam quo autem exercitationem.</a>
+                  </li>
+                  <li>
+                    <a href="#">Atque placeat maiores nam quo autem</a>
+                  </li>
+                  <li>
+                    <a href="#">Nam quo autem exercitationem.</a>
+                  </li>
+                </ul>
+              </div>
+            </div> -->
+            <!-- <div class="widget-sidebar widget-tags">
+              <h5 class="sidebar-title">Tags</h5>
+              <div class="sidebar-content">
+                <ul>
+                  <li>
+                    <a href="#">Web.</a>
+                  </li>
+                  <li>
+                    <a href="#">Design.</a>
+                  </li>
+                  <li>
+                    <a href="#">Travel.</a>
+                  </li>
+                  <li>
+                    <a href="#">Photoshop</a>
+                  </li>
+                  <li>
+                    <a href="#">Corel Draw</a>
+                  </li>
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                </ul>
+              </div>
+            </div> -->
+          </div>
+        </div>
+          
+          
+      </div>
+    </section><!-- End Blog Single Section -->
+
+  </main><!-- End #main -->
+
+   <!-- ======= Footer ======= -->
+   <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="copyright-box">
+            <p class="copyright">&copy; Copyright <strong>DavidOmizz</strong>. All Rights Reserved</p>
+            <div class="credits">
+              <!--
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=DevFolio
+            -->
+              Designed by <a href="https://bootstrapmade.com/">DavidOmizz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End  Footer -->
+
+  <div id="preloader"></div>
+  <!-- <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> -->
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/typed.js/typed.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

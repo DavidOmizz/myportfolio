@@ -17,6 +17,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIRS = BASE_DIR / 'templates'
 STATIC_DIR = BASE_DIR / 'static'
 MEDIA_ROOT = BASE_DIR / 'media'
+STATIC_ROOT = '/home/davidomizz/myportfolio/myportfolio/static'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 
@@ -130,7 +131,6 @@ STATICFILES_DIRS = [
 ] 
 
 MEDIA_URL = '/media/'
-STATIC_ROOT = '/home/davidomizz/myportfolio/myportfolio/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

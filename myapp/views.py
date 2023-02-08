@@ -3,7 +3,7 @@
 # from re import template
 # from turtle import title
 from .models import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, redirect
 from .forms import *
 from django.contrib import messages
@@ -70,9 +70,19 @@ def blog_list(request):
     #     data = Blog.objects.filter(title__icontains= q)
     # else :
     #     data = Blog.objects.all() 
+
+    query = request.GET.get('q')
+    if query:
+        bloglist = Blog.objects.filter(Q(title__icontains = query) | Q(body__icontains = query)).order_by('-created_on')
+    else:
+        bloglist = Blog.objects.all()
+
+    if not bloglist:
+        messages.warning(request, 'No content found!')
+    
     return render(request, template_name,{'bloglist':bloglist,'blogsides':blogsides})
 
-class BlogSearchView(ListView):
+# class BlogSearchView(ListView):
     model = Blog
     template_name = "blog-list.html"
     context_object_name = 'bloglist'
@@ -80,10 +90,14 @@ class BlogSearchView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            object_list = Blog.objects.filter(Q(title__icontains = query) | Q(body__icontains = query))
-            return object_list
+            context_object_name = Blog.objects.filter(Q(title__icontains = query) | Q(body__icontains = query))
+            return context_object_name
+        
         else:
-            return object_list
+            context_object_name = Blog.objects.all()
+        
+        if not context_object_name:
+            return HttpResponse('No cotent found')
 
 
 

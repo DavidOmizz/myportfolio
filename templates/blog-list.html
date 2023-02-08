@@ -89,6 +89,13 @@
       <div class="container-fluid"> 
         <div class="row">
           <div class="col-md-9 box-shadow-full p-5">
+            {% if messages %} 
+          <!-- {% for message in messages %}  -->
+          <div style="justify-content: center; display: flex; align-items: center;" class="pt-5">
+            <div class="alert alert-warning">{{ message }}</div> 
+          </div>
+          <!-- {% endfor %}  -->
+          {% endif %}
           {% if bloglist %}
           {% for bl in bloglist %}
               <div class="row">
@@ -142,7 +149,7 @@
             <div class="widget-sidebar sidebar-search">
               <h5 class="sidebar-title">Search</h5>
               <div class="sidebar-content">
-                <form action="{% url 'search_blogs' %}" method="get">
+                <form action="{% url 'bloglist' %}" method="get">
                   {% csrf_token %}
                   <div class="input-group">
                     <input type="search" class="form-control" name="q" placeholder="Search for..." aria-label="Search for...">

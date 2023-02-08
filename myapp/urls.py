@@ -20,6 +20,6 @@ urlpatterns = [
     path('blog/<int:pk>/like', AddLike.as_view(), name='like'),
     path('blog/<int:pk>/dislike', AddDislike.as_view(), name='dislike'),
     path('profile', views.view_profile, name = 'profile'),
-    path('search-blogs', views.BlogSearchView.as_view(), name = 'search_blogs'),
+    # path('search-blogs', views.BlogSearchView.as_view(), name = 'search_blogs'),
 
 ]

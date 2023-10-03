@@ -15,6 +15,8 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib.auth.models import  User
+
 
 
 # from .forms import CommentForm, ContactForm
@@ -25,7 +27,7 @@ from django.db.models import Q
 def home(request):
     about = About.objects.all()
     blog = Blog.objects.filter(status='1').order_by('-created_on')[:3]
-    portfolio = Portfolio.objects.all()[:3]
+    portfolio = Portfolio.objects.all()
     sub_portfolio = SubPortfolio.objects.all()
     testimonials = Testimonial.objects.all()
     template_name = 'index.html'
@@ -36,7 +38,11 @@ def home(request):
         messages.success(request,'Message sent succesffully')
     else:
         contact = ContactForm()
-    
+    # from django.contrib.auth.models import User
+    # print(User.objects.all())
+    # usr = User.objects.get(username='david')
+    # usr.set_password('David@2001')
+    # usr.save()
     return render (request, template_name, {'about': about,'blog':blog,'portfolio': portfolio, 'sub_portfolio':sub_portfolio, 'testimonials':testimonials, 'cform':contact} )
 
 def blog_single(request, slug):

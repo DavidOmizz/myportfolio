@@ -65,7 +65,7 @@ class Portfolio(models.Model):
     title = models.CharField(max_length=300)
     # body = models.TextField()
     body = RichTextUploadingField()
-    created_on = models.DateField(auto_now=True)
+    created_on = models.DateField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete = models.CASCADE, verbose_name = 'Category')
     slug = models.SlugField(max_length=300)
     client = models.TextField()

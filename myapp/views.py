@@ -17,6 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import  User
 
+from django.core.mail import send_mail,BadHeaderError
 
 
 # from .forms import CommentForm, ContactForm
@@ -34,7 +35,23 @@ def home(request):
     if request.method == 'POST':
         contact = ContactForm(data=request.POST)
         if contact.is_valid():
+            email = contact.cleaned_data['email']
+            name = contact.cleaned_data['name']
+            subject = contact.cleaned_data['subject']
+            message = contact.cleaned_data['message']
             contact.save()
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    email,
+                    ["davidomisakin4good@gmail.com"],
+                    fail_silently=False,
+                )
+            except BadHeaderError as e:
+                print(f"BadHeaderError: {e}")
+            except Exception as e:
+                print(f"An error occurred: {e}")
         messages.success(request,'Message sent succesffully')
     else:
         contact = ContactForm()
@@ -43,6 +60,8 @@ def home(request):
     # usr = User.objects.get(username='david')
     # usr.set_password('David@2001')
     # usr.save()
+    user  = User.objects.all()
+    print(user)
     return render (request, template_name, {'about': about,'blog':blog,'portfolio': portfolio, 'sub_portfolio':sub_portfolio, 'testimonials':testimonials, 'cform':contact} )
 
 def blog_single(request, slug):

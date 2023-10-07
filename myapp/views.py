@@ -19,7 +19,7 @@ from django.contrib.auth.models import  User
 
 from django.core.mail import send_mail,BadHeaderError
 
-
+from django.conf import settings
 # from .forms import CommentForm, ContactForm
 # from django.shortcuts import render, get_object_or_404
 
@@ -38,14 +38,25 @@ def home(request):
             email = contact.cleaned_data['email']
             name = contact.cleaned_data['name']
             subject = contact.cleaned_data['subject']
-            message = contact.cleaned_data['message']
-            contact.save()
+            message = f"{email} sent you a message:{contact.cleaned_data['message']}"
+            # contact.save()
+            mymail = settings.EMAIL_HOST_USER
+            userSubject = 'Your mail was received'
+            userMessage = f"You successfully sent a mail to {mymail}"
+            userReceipient = email
             try:
                 send_mail(
                     subject,
                     message,
                     email,
                     ["davidomisakin4good@gmail.com"],
+                    fail_silently=False,
+                )
+                send_mail(
+                    userSubject,
+                    userMessage,
+                    email,
+                    recipient_list = [userReceipient],
                     fail_silently=False,
                 )
             except BadHeaderError as e:

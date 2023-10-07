@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,8 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-hc23r_6al9z-k6yjwy5)150i^3)$y_g0cvbdzcmeng91tft2+-'
+# SECRET_KEY = 'django-insecure-hc23r_6al9z-k6yjwy5)150i^3)$y_g0cvbdzcmeng91tft2+-'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -149,4 +151,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'davidomisakin4good@gmail.com'
-EMAIL_HOST_PASSWORD = 'kwff jutc wolm vbqj'
+# EMAIL_HOST_PASSWORD = 'kwff jutc wolm vbqj'
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')

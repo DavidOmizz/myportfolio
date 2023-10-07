@@ -142,6 +142,9 @@ def portfolio_single(request, slug):
     return render(request, 'portfolio-details.html', {'psingle': psingle} )
 
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
 
 # def register(request):
 #     # register_form = RegForm.objects.all()

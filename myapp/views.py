@@ -15,8 +15,11 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib.auth.models import  User
 
+from django.core.mail import send_mail,BadHeaderError
 
+from django.conf import settings
 # from .forms import CommentForm, ContactForm
 # from django.shortcuts import render, get_object_or_404
 
@@ -25,18 +28,51 @@ from django.db.models import Q
 def home(request):
     about = About.objects.all()
     blog = Blog.objects.filter(status='1').order_by('-created_on')[:3]
-    portfolio = Portfolio.objects.all()[:3]
+    portfolio = Portfolio.objects.all()
     sub_portfolio = SubPortfolio.objects.all()
     testimonials = Testimonial.objects.all()
     template_name = 'index.html'
     if request.method == 'POST':
         contact = ContactForm(data=request.POST)
         if contact.is_valid():
-            contact.save()
+            email = contact.cleaned_data['email']
+            name = contact.cleaned_data['name']
+            subject = contact.cleaned_data['subject']
+            message = f"{email} sent you a message:{contact.cleaned_data['message']}"
+            # contact.save()
+            mymail = settings.EMAIL_HOST_USER
+            userSubject = 'Your mail was received'
+            userMessage = f"You successfully sent a mail to {mymail}"
+            userReceipient = email
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    email,
+                    ["davidomisakin4good@gmail.com"],
+                    fail_silently=False,
+                )
+                send_mail(
+                    userSubject,
+                    userMessage,
+                    email,
+                    recipient_list = [userReceipient],
+                    fail_silently=False,
+                )
+            except BadHeaderError as e:
+                print(f"BadHeaderError: {e}")
+            except Exception as e:
+                print(f"An error occurred: {e}")
         messages.success(request,'Message sent succesffully')
     else:
         contact = ContactForm()
-    
+    # from django.contrib.auth.models import User
+    # print(User.objects.all())
+    # usr = User.objects.get(username='david')
+    # usr.set_password('David@2001')
+    # usr.save()
+    user  = User.objects.all()
+    print(user)
     return render (request, template_name, {'about': about,'blog':blog,'portfolio': portfolio, 'sub_portfolio':sub_portfolio, 'testimonials':testimonials, 'cform':contact} )
 
 def blog_single(request, slug):
@@ -105,6 +141,9 @@ def portfolio_single(request, slug):
     psingle = get_object_or_404(Portfolio, slug=slug)
     return render(request, 'portfolio-details.html', {'psingle': psingle} )
 
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
 
 
 # def register(request):

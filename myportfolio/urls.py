@@ -26,7 +26,7 @@ urlpatterns = [
     # path('backend', include('backend.urls')),
 ]
 
-
+handler404 = 'myapp.views.custom_404'  # Set your custom 404 view
 
 
 if settings.DEBUG: 

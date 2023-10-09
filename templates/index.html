@@ -47,12 +47,13 @@
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link scrollto " href="#work">Portfolio</a></li>
           <!-- <li><a class="nav-link scrollto" href="#blog">Blog</a> -->
-          <li class="dropdown"><a href="#blog" class="nav-link scrollto" href="#blog"><span>Blog</span> <i class="bi bi-chevron-down"></i></a>
+            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <li><a class="nav-link scrollto" target="_blank" href="http://omizz.pythonanywhere.com/">Blog</a></li>
+          <!-- <li class="dropdown"><a href="#blog" class="nav-link scrollto" href="#blog"><span>Blog</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{% url 'bloglist' %}">All Blogs</a></li>
             </ul>
-          </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          </li> -->
           
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -93,9 +94,9 @@
             <div class="box-shadow-full">
               <div class="row">
                 <div class="col-md-6">
-                  <!-- <div class="row"> -->
+                  <div class="row">
                     
-                    <!-- <div class="col-sm-6 col-md-5">
+                    <div class="col-sm-6 col-md-5">
                       <div class="about-img">
                         <img src="{{ about.image.url }}" class="img-fluid rounded b-shadow-a" alt="">
                       </div>
@@ -107,49 +108,53 @@
                         <p><span class="title-s">Email: </span> <span>{{ about.email }}</span></p>
                         <p><span class="title-s">Phone: </span> <span>(+234) {{ about.phone_no }}</span></p>
                       </div>
-                    </div> -->
+                    </div>
                     
                   </div>
                   <div class="skill-mf">
-                    <!-- <p class="title-s">Skill</p> -->
-                    <!-- <span>PYTHON</span> <span class="pull-right">50%</span>
+                    <p class="title-s">Skill</p>
+                    <span>PYTHON</span> <span class="pull-right"></span>
                     <div class="progress">
-                      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <span>DJANGO</span> <span class="pull-right">70%</span>
-                    <div class="progress">
-                      <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <span>JAVASCRIPT</span> <span class="pull-right">50%</span>
-                    <div class="progress">
-                      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <span>REACT.JS</span> <span class="pull-right">70%</span>
+                    <span>DJANGO</span> <span class="pull-right"></span>
                     <div class="progress">
                       <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <span>HTML</span> <span class="pull-right">100%</span>
+                    <span>Database: MySql / PostgreSql</span> <span class="pull-right"></span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span>JAVASCRIPT</span> <span class="pull-right"></span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span>REACT.JS</span> <span class="pull-right"></span>
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span>HTML</span> <span class="pull-right"></span>
                     <div class="progress">
                       <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <span>CSS3</span> <span class="pull-right">85%</span>
+                    <span>CSS3</span> <span class="pull-right"></span>
                     <div class="progress">
-                      <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <span>BOOTSTRAP</span> <span class="pull-right">90%</span>
+                    <span>BOOTSTRAP / TAILWIND CSS</span> <span class="pull-right"></span>
                     <div class="progress">
                       <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div> -->
-                  <!-- </div>
-                  <div class="skill-mf">
+                    </div>
+                  </div>
+                  <!-- <div class="skill-mf">
                     <span>PYTHON</span> <br>
                     <span>DJANGO</span><br>
                     <span>JAVASCRIPT</span><br>
                     <span>REACT.JS</span><br>
                     <span>BOOTSTRAP</span><br>
                     <span>BOOTSTRAP</span><br>
-                  </div>
-                </div> -->
+                  </div> -->
+                </div>
                 <div class="col">
                   <div class="about-me pt-4 pt-md-0">
                     <div class="title-box-2">
@@ -161,7 +166,7 @@
                       {{ about.body| safe }}
                     </p>
                   </div>
-                  <div>
+                  <!-- <div>
                     <p class="title-s">Skill</p>
                     <div class="d-flex">
                       <div>
@@ -177,7 +182,7 @@
                         <span>REACT.JS</span><br>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   
                 </div>
               </div>
@@ -513,7 +518,7 @@
     <!-- End Testimonials Section -->
 
     <!-- ======= Blog Section ======= -->
-    <section id="blog" class="blog-mf sect-pt4 route">
+    <!-- <section id="blog" class="blog-mf sect-pt4 route">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
@@ -626,14 +631,15 @@
               </div>
             </div>
           </div> -->
-          {% endfor %}
+          <!-- {% endfor %}
           {% endif %}
         </div>
       </div>
-    </section><!-- End Blog Section -->
+    </section> -->
+    <!-- End Blog Section -->
 
     
-    <br><br>
+    <!-- <br><br> -->
     <!-- ======= Counter Section ======= -->
     <!-- <div class="section-counter paralax-mf bg-image" style="background-image: url(../../static/assets/img/counters-bg.jpg)">
       <div class="overlay-mf"></div>

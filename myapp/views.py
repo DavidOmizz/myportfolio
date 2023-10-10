@@ -38,7 +38,7 @@ def home(request):
             email = contact.cleaned_data['email']
             name = contact.cleaned_data['name']
             subject = contact.cleaned_data['subject']
-            message = f"{email} sent you a message:{contact.cleaned_data['message']}"
+            message = f"Email:{email}, Name:{name}, sent you a message:{contact.cleaned_data['message']}"
             # contact.save()
             mymail = settings.EMAIL_HOST_USER
             userSubject = 'Your mail was received'
@@ -71,8 +71,8 @@ def home(request):
     # usr = User.objects.get(username='david')
     # usr.set_password('David@2001')
     # usr.save()
-    user  = User.objects.all()
-    print(user)
+    # user  = User.objects.all()
+    # print(user)
     return render (request, template_name, {'about': about,'blog':blog,'portfolio': portfolio, 'sub_portfolio':sub_portfolio, 'testimonials':testimonials, 'cform':contact} )
 
 def blog_single(request, slug):

@@ -22,14 +22,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
     path('tinymce/', include('tinymce.urls')),
-    path('ckeditor', include('ckeditor_uploader.urls'))
+    path('ckeditor', include('ckeditor_uploader.urls')),
     # path('backend', include('backend.urls')),
 ]
 
 handler404 = 'myapp.views.custom_404'  # Set your custom 404 view
 
 
-if settings.DEBUG: 
+if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, 
     document_root=settings.STATIC_URL) 
     urlpatterns += static(settings.MEDIA_URL, 

@@ -30,33 +30,48 @@ def home(request):
     blog = Blog.objects.filter(status='1').order_by('-created_on')[:3]
     portfolio = Portfolio.objects.all()
     sub_portfolio = SubPortfolio.objects.all()
-    testimonials = Testimonial.objects.all()
+    testimonials = Testimonial.objects.all() 
     template_name = 'index.html'
+
+    
     if request.method == 'POST':
         contact = ContactForm(data=request.POST)
         if contact.is_valid():
             email = contact.cleaned_data['email']
             name = contact.cleaned_data['name']
             subject = contact.cleaned_data['subject']
+            message_content = contact.cleaned_data['message']
             message = f"Email:{email}, Name:{name}, sent you a message:{contact.cleaned_data['message']}"
+            # Prepare plain and HTML messages
+            plain_message = f"Email: {email}\nName: {name}\nMessage:\n{message_content}"
+            html_message = f"""
+                <h2>New Message from Your Portfolio Site</h2>
+                <p><strong>Name:</strong> {name}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Message:</strong></p>
+                <p>{message_content}</p>
+            """
             # contact.save()
             mymail = settings.EMAIL_HOST_USER
             userSubject = 'Your mail was received'
-            userMessage = f"You successfully sent a mail to {mymail}"
+            # userMessage = f"You successfully sent a mail to {mymail}"
+            userMessage = f"Hello {name},\n\nYou successfully sent a message to {mymail}.\nWe will get back to you shortly.\n\nThank you!"
             userReceipient = email
             try:
                 send_mail(
                     subject,
-                    message,
-                    email,
+                    plain_message,
+                    settings.EMAIL_HOST_USER,
                     ["davidomisakin4good@gmail.com"],
+                    html_message=html_message,
                     fail_silently=False,
                 )
+
                 send_mail(
                     userSubject,
                     userMessage,
                     email,
-                    recipient_list = [userReceipient],
+                    [userReceipient],
                     fail_silently=False,
                 )
             except BadHeaderError as e:

@@ -48,7 +48,8 @@
           <li><a class="nav-link scrollto " href="#work">Portfolio</a></li>
           <!-- <li><a class="nav-link scrollto" href="#blog">Blog</a> -->
             <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-            <li><a class="nav-link scrollto" target="_blank" href="http://omizz.pythonanywhere.com/">Blog</a></li>
+            <!-- <li><a class="nav-link scrollto" target="_blank" href="http://omizz.pythonanywhere.com/">Blog</a></li> -->
+            <li><a class="nav-link scrollto" target="_blank" href="{% url 'bloglist' %}">Blog</a></li>
           <!-- <li class="dropdown"><a href="#blog" class="nav-link scrollto" href="#blog"><span>Blog</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{% url 'bloglist' %}">All Blogs</a></li>
@@ -719,17 +720,17 @@
                         <div class="row">
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
+                              {{ cform.subject }}
+                            </div>
+                          </div>
+                          <div class="col-md-12 mb-3">
+                            <div class="form-group">
                               {{ cform.name }}
                             </div>
                           </div>
                           <div class="col-md-12 mb-3">
                             <div class="form-group">
                               {{ cform.email }}
-                            </div>
-                          </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              {{ cform.subject }}
                             </div>
                           </div>
                           <div class="col-md-12">

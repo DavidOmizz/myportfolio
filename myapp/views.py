@@ -15,8 +15,11 @@ from django.views import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib.auth.models import  User
 
+from django.core.mail import send_mail,BadHeaderError
 
+from django.conf import settings
 # from .forms import CommentForm, ContactForm
 # from django.shortcuts import render, get_object_or_404
 
@@ -25,18 +28,66 @@ from django.db.models import Q
 def home(request):
     about = About.objects.all()
     blog = Blog.objects.filter(status='1').order_by('-created_on')[:3]
-    portfolio = Portfolio.objects.all()[:3]
+    portfolio = Portfolio.objects.all()
     sub_portfolio = SubPortfolio.objects.all()
-    testimonials = Testimonial.objects.all()
+    testimonials = Testimonial.objects.all() 
     template_name = 'index.html'
+
+    
     if request.method == 'POST':
         contact = ContactForm(data=request.POST)
         if contact.is_valid():
-            contact.save()
+            email = contact.cleaned_data['email']
+            name = contact.cleaned_data['name']
+            subject = contact.cleaned_data['subject']
+            message_content = contact.cleaned_data['message']
+            message = f"Email:{email}, Name:{name}, sent you a message:{contact.cleaned_data['message']}"
+            # Prepare plain and HTML messages
+            plain_message = f"Email: {email}\nName: {name}\nMessage:\n{message_content}"
+            html_message = f"""
+                <h2>New Message from Your Portfolio Site</h2>
+                <p><strong>Name:</strong> {name}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Message:</strong></p>
+                <p>{message_content}</p>
+            """
+            # contact.save()
+            mymail = settings.EMAIL_HOST_USER
+            userSubject = 'Your mail was received'
+            # userMessage = f"You successfully sent a mail to {mymail}"
+            userMessage = f"Hello {name},\n\nYou successfully sent a message to {mymail}.\nWe will get back to you shortly.\n\nThank you!"
+            userReceipient = email
+            try:
+                send_mail(
+                    subject,
+                    plain_message,
+                    settings.EMAIL_HOST_USER,
+                    ["davidomisakin4good@gmail.com"],
+                    html_message=html_message,
+                    fail_silently=False,
+                )
+
+                send_mail(
+                    userSubject,
+                    userMessage,
+                    email,
+                    [userReceipient],
+                    fail_silently=False,
+                )
+            except BadHeaderError as e:
+                print(f"BadHeaderError: {e}")
+            except Exception as e:
+                print(f"An error occurred: {e}")
         messages.success(request,'Message sent succesffully')
     else:
         contact = ContactForm()
-    
+    # from django.contrib.auth.models import User
+    # print(User.objects.all())
+    # usr = User.objects.get(username='david')
+    # usr.set_password('David@2001')
+    # usr.save()
+    # user  = User.objects.all()
+    # print(user)
     return render (request, template_name, {'about': about,'blog':blog,'portfolio': portfolio, 'sub_portfolio':sub_portfolio, 'testimonials':testimonials, 'cform':contact} )
 
 def blog_single(request, slug):
@@ -105,6 +156,9 @@ def portfolio_single(request, slug):
     psingle = get_object_or_404(Portfolio, slug=slug)
     return render(request, 'portfolio-details.html', {'psingle': psingle} )
 
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
 
 
 # def register(request):

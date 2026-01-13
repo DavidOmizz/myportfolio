@@ -3,14 +3,14 @@ from .models import *
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-class ContactForm(forms.ModelForm):
+class ContactForm(forms.Form):
     name = forms.CharField(required=True, label = 'Name', widget= forms.TextInput(attrs={'placeholder':'Enter full name', 'class': 'form-control'}))
     email = forms.EmailField(required=True,label = 'email', widget= forms.TextInput(attrs={'placeholder':'Enter your mail', 'class': 'form-control'}))
     subject = forms.CharField(required=True,label = 'subject', widget= forms.TextInput(attrs={'placeholder':'Subject', 'class': 'form-control'}))
     message = forms.CharField(required=True,label = 'message', widget= forms.Textarea(attrs={'placeholder':'Message', 'class': 'form-control'}))
-    class Meta:
-        model =Contact
-        fields = ('name', 'email', 'subject', 'message')
+    # class Meta:
+    #     model =Contact
+    #     fields = ('name', 'email', 'subject', 'message')
 
 
 class CommentForm(forms.ModelForm):
